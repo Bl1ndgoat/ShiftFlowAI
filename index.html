@@ -1453,7 +1453,7 @@ async function saveToCloud(actionType, payload) {
             historyList.innerHTML = '';
 
             if (currentHistoryTab === 'resolved-issues') {
-                const resolvedList = issues.filter(i => i.resolved);
+                const resolvedList = issues.filter(i => i && i.resolved);
                 if (resolvedList.length === 0) {
                     historyList.innerHTML = `
                         <div class="py-16 text-center">
