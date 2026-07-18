@@ -512,29 +512,30 @@
       }
   }
 
-  async function saveToCloud(actionType, payload) {
-      if (actionType === 'addHandover') handovers.unshift(payload);
-      if (actionType === 'addIssue') issues.unshift(payload);
-      renderDashboard();
+async function saveToCloud(actionType, payload) {
+    if (actionType === 'addHandover') handovers.unshift(payload);
+    if (actionType === 'addIssue') issues.unshift(payload);
+    
+    // 👇 FIX: Saves locally immediately so switching tabs NEVER deletes your data!
+    localStorage.setItem('shift_handovers', JSON.stringify(handovers));
+    localStorage.setItem('shift_issues', JSON.stringify(issues));
+    renderDashboard();
 
-      if (!CLOUD_API_URL || CLOUD_API_URL.includes("YOUR_GOOGLE")) {
-          localStorage.setItem('shift_handovers', JSON.stringify(handovers));
-          localStorage.setItem('shift_issues', JSON.stringify(issues));
-          return;
-      }
+    if (!CLOUD_API_URL || CLOUD_API_URL.includes("YOUR_GOOGLE")) {
+        return;
+    }
 
-      try {
-          await fetch(CLOUD_API_URL, {
-              method: 'POST',
-              mode: 'no-cors', 
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ action: actionType, data: payload })
-          });
-          setTimeout(fetchCloudData, 1500); 
-      } catch (error) {
-          console.error("Cloud save failed:", error);
-      }
-  }
+    try {
+        await fetch(CLOUD_API_URL, {
+            method: 'POST',
+            mode: 'no-cors', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: actionType, data: payload })
+        });
+    } catch (error) {
+        console.error("Cloud save failed:", error);
+    }
+}
         function seedDataIfEmpty() {
             if (!localStorage.getItem('shift_handovers')) {
                 localStorage.setItem('shift_handovers', JSON.stringify([]));
