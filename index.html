@@ -1069,7 +1069,7 @@
                     completed: false,
                     completedAt: null
                 };
-                handovers.unshift(newHandover);
+                saveToCloud('addHandover', newHandover);
             }
 
             saveData();
@@ -1115,7 +1115,7 @@
                     resolvedAt: null,
                     createdAt: Date.now()
                 };
-                issues.unshift(newIssue);
+                saveToCloud('addIssue', newIssue);
             }
 
             saveData();
