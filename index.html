@@ -1486,7 +1486,7 @@ async function saveToCloud(actionType, payload) {
                     historyList.appendChild(card);
                 });
             } else if (currentHistoryTab === 'completed-handovers') {
-                const completedList = handovers.filter(h => h.completed);
+                const completedList = handovers.filter(h => h && h.completed);
                 if (completedList.length === 0) {
                     historyList.innerHTML = `
                         <div class="py-16 text-center">
@@ -1518,7 +1518,7 @@ async function saveToCloud(actionType, payload) {
                     historyList.appendChild(card);
                 });
             } else {
-                const expiredList = handovers.filter(h => h.expired);
+                const expiredList = handovers.filter(h => h && h.expired);
                 if (expiredList.length === 0) {
                     historyList.innerHTML = `
                         <div class="py-16 text-center">
