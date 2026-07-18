@@ -858,7 +858,7 @@ async function saveToCloud(actionType, payload) {
                 }
                 return is;
             });
-            saveData();
+            saveToCloud('resolveIssue', null);
             renderDashboard();
             triggerHapticFeedback();
             showToast('Issue Marked Resolved');
@@ -873,7 +873,7 @@ async function saveToCloud(actionType, payload) {
                 }
                 return h;
             });
-            saveData();
+            saveToCloud('completeHandover', null);
             renderDashboard();
             triggerHapticFeedback();
             showToast('Handover Completed');
@@ -881,7 +881,7 @@ async function saveToCloud(actionType, payload) {
 
         function deleteHandover(id) {
             handovers = handovers.filter(h => h.id !== id);
-            saveData();
+            saveToCloud('deleteHandover', null);
             renderDashboard();
             showToast('Handover Deleted');
         }
@@ -1076,7 +1076,7 @@ async function saveToCloud(actionType, payload) {
                 saveToCloud('addHandover', newHandover);
             }
 
-            saveData();
+            saveToCloud(editId ? 'editHandover' : 'addHandover', null);
             renderDashboard();
             closeSheet();
             triggerHapticFeedback();
@@ -1122,7 +1122,7 @@ async function saveToCloud(actionType, payload) {
                 saveToCloud('addIssue', newIssue);
             }
 
-            saveData();
+            saveToCloud(editId ? 'editIssue' : 'addIssue', null);
             renderDashboard();
             closeSheet();
             triggerHapticFeedback();
