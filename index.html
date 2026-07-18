@@ -709,8 +709,8 @@ async function saveToCloud(actionType, payload) {
             isList.innerHTML = '';
 
             // Handovers must not be expired, and must not be marked complete
-            const activeHandovers = handovers.filter(h => !h.expired && !h.completed);
-            const openIssues = issues.filter(i => !i.resolved);
+            const activeHandovers = handovers.filter(h => h && !h.expired && !h.completed);
+            const openIssues = issues.filter(i => i && !i.resolved);
 
             document.getElementById('handover-count').textContent = `${activeHandovers.length} active`;
             document.getElementById('issue-count').textContent = `${openIssues.length} open`;
