@@ -479,7 +479,7 @@
     <!-- MAIN APP JAVASCRIPT -->
     <script>
         // ----- CONFIGURATION: PLUG IN YOUR GOOGLE SYNC HERE ------ //
-  const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbzLcnXsLy1tJ7ki19_BuNrg8aZrjKIbncQQdFZWvh1E/dev";
+  const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbyp_IcWvkioQC9elfXiqcwLq15TRQxF1VcYRq0Z55pI_JnD1ctbFKuT9Y76iAwWO992qA/execv";
         
         // ----------------- STATE & STORAGE -----------------
         let handovers = [];
@@ -565,21 +565,26 @@ async function saveToCloud(actionType, payload) {
         }
 
         function cleanExpiredHandovers() {
-            const now = Date.now();
-            let changed = false;
-            handovers = handovers.map(h => {
-                // Only handovers configured with "Auto" expiration expire by timer
-                if (h.method !== 'Manual' && h.expiresAt < now && !h.expired && !h.completed) {
-                    h.expired = true;
-                    h.expiredAt = now;
-                    changed = true;
-                }
-                return h;
-            });
-            if (changed) {
-                saveData();
-            }
+    const now = Date.now();
+    let changed = false;
+    
+    handovers = handovers.map(h => {
+        // --- ADD THIS LINE ---
+        if (!h) return h; 
+        
+        // Now it is safe to check the properties
+        if (h.method !== 'Manual' && h.expiresAt < now && !h.expired && !h.completed) {
+            h.expired = true;
+            h.expiredAt = now;
+            changed = true;
         }
+        return h;
+    });
+    
+    if (changed) {
+        saveData();
+    }
+}
     
 
         // ----------------- DATE & SHIFT UTILS -----------------
