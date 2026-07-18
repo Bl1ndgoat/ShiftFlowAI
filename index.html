@@ -516,7 +516,6 @@ async function saveToCloud(actionType, payload) {
     if (actionType === 'addHandover') handovers.unshift(payload);
     if (actionType === 'addIssue') issues.unshift(payload);
     
-    // 👇 FIX: Saves locally immediately so switching tabs NEVER deletes your data!
     localStorage.setItem('shift_handovers', JSON.stringify(handovers));
     localStorage.setItem('shift_issues', JSON.stringify(issues));
     renderDashboard();
@@ -530,7 +529,11 @@ async function saveToCloud(actionType, payload) {
             method: 'POST',
             mode: 'no-cors', 
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: actionType, data: payload })
+            // 👇 FIX: Sends the complete arrays so Google script can map them perfectly
+            body: JSON.stringify({ 
+                handovers: handovers, 
+                issues: issues 
+            })
         });
     } catch (error) {
         console.error("Cloud save failed:", error);
