@@ -568,11 +568,14 @@ async function saveToCloud(actionType, payload) {
     const now = Date.now();
     let changed = false;
     
+    // Safety: If handovers is null/undefined, stop immediately
+    if (!handovers) return; 
+
     handovers = handovers.map(h => {
-        // --- ADD THIS LINE ---
+        // --- THIS IS THE FIX ---
+        // If an individual item is null, skip it!
         if (!h) return h; 
         
-        // Now it is safe to check the properties
         if (h.method !== 'Manual' && h.expiresAt < now && !h.expired && !h.completed) {
             h.expired = true;
             h.expiredAt = now;
@@ -585,6 +588,7 @@ async function saveToCloud(actionType, payload) {
         saveData();
     }
 }
+
     
 
         // ----------------- DATE & SHIFT UTILS -----------------
