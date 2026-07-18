@@ -1085,10 +1085,16 @@ async function saveToCloud() {
                     completed: false,
                     completedAt: null
                 };
-                saveToCloud('addHandover', newHandover);
-            }
-
-            saveToCloud(editId ? 'editHandover' : 'addHandover', null);
+                if (editId) {
+    // If editing, update the specific item in the array
+    const index = handovers.findIndex(h => h.id === editId);
+    if (index !== -1) {
+        handovers[index] = { ...handovers[index], ...newHandover };
+    }
+} else {
+    // If new, add it to the array
+    handovers.unshift(newHandover);
+}
             renderDashboard();
             closeSheet();
             triggerHapticFeedback();
