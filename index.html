@@ -852,6 +852,7 @@ async function saveToCloud(actionType, payload) {
         // ----------------- ACTIONS (RESOLVE, DONE, EDIT, DELETE) -----------------
         function resolveIssue(id) {
             issues = issues.map(is => {
+                if (!is) return is; // <--- ADD THIS: Skip if the item is null
                 if (is.id === id) {
                     is.resolved = true;
                     is.resolvedAt = Date.now();
@@ -887,7 +888,7 @@ async function saveToCloud(actionType, payload) {
         }
 
         function editHandover(id) {
-            const ho = handovers.find(h => h.id === id);
+            const ho = handovers.find(h => h && h.id === id); // <--- ADDED 'h &&' safety check
             if (!ho) return;
 
             openSheet();
