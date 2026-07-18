@@ -868,12 +868,14 @@ async function saveToCloud(actionType, payload) {
         // Complete manual handover task action
         function completeHandover(id) {
             handovers = handovers.map(h => {
+                 if (!h) return h; // <--- ADD THIS: Skip if the item is null
                 if (h.id === id) {
                     h.completed = true;
                     h.completedAt = Date.now();
-                }
+                 }
                 return h;
             });
+
             saveToCloud('completeHandover', null);
             renderDashboard();
             triggerHapticFeedback();
@@ -881,7 +883,7 @@ async function saveToCloud(actionType, payload) {
         }
 
         function deleteHandover(id) {
-            handovers = handovers.filter(h => h.id !== id);
+            handovers = handovers.filter(h => h && h.id !== id);
             saveToCloud('deleteHandover', null);
             renderDashboard();
             showToast('Handover Deleted');
