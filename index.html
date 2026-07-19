@@ -1137,14 +1137,16 @@ async function saveToCloud() {
                     resolvedAt: null,
                     createdAt: Date.now()
                 };
-                saveToCloud('addIssue', newIssue);
-            }
-
-            saveToCloud(editId ? 'editIssue' : 'addIssue', null);
+                issues.unshift(newIssue);
+    }
+    
+    saveToCloud();
             renderDashboard();
             closeSheet();
             triggerHapticFeedback();
             showToast(editId ? 'Issue Updated' : 'Issue Raised');
+            saveTo 
+            
         });
 
         // ----------------- SEARCH MECHANISM -----------------
