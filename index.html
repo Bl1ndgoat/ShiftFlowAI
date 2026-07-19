@@ -868,7 +868,7 @@ async function saveToCloud() {
                 }
                 return is;
             });
-            saveToCloud('resolveIssue', null);
+            saveToCloud();
             renderDashboard();
             triggerHapticFeedback();
             showToast('Issue Marked Resolved');
@@ -885,7 +885,7 @@ async function saveToCloud() {
                 return h;
             });
 
-            saveToCloud('completeHandover', null);
+            saveToCloud();
             renderDashboard();
             triggerHapticFeedback();
             showToast('Handover Completed');
@@ -893,7 +893,7 @@ async function saveToCloud() {
 
         function deleteHandover(id) {
             handovers = handovers.filter(h => h && h.id !== id);
-            saveToCloud('deleteHandover', null);
+            saveToCloud();
             renderDashboard();
             showToast('Handover Deleted');
         }
@@ -1099,6 +1099,7 @@ async function saveToCloud() {
             closeSheet();
             triggerHapticFeedback();
             showToast(editId ? 'Handover Updated' : 'Handover Logged');
+            saveToCloud();
         });
 
         document.getElementById('issue-form').addEventListener('submit', function(e) {
@@ -1144,8 +1145,7 @@ async function saveToCloud() {
             renderDashboard();
             closeSheet();
             triggerHapticFeedback();
-            showToast(editId ? 'Issue Updated' : 'Issue Raised');
-            saveTo 
+            showToast(editId ? 'Issue Updated' : 'Issue Raised'); 
             
         });
 
