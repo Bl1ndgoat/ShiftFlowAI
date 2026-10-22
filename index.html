@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>ShiftFlow AI</title>
+
+    <meta
+        name="theme-color"
+        content="#B08D57">
+
+    <meta
+        name="description"
+        content="Operational Front Office Assistant">
+
+    <link
+        rel="manifest"
+        href="manifest.json">
+
+    <link
+        rel="icon"
+        href="assets/icon-192.png">
+
+    <link
+        rel="apple-touch-icon"
+        href="assets/icon-192.png">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="styles.css">
+</head>
+
+<body>
+
+<div id="app" class="app-locked">
+
+
+    <!-- ===================================================== -->
+    <!-- START SHIFT -->
+    <!-- ===================================================== -->
+
+<section id="startShiftPage" class="start-shift-page">
+
+    <div class="start-shift-card">
+
+        <h1>ShiftFlow AI</h1>
+
+        <p>Begin your shift to continue.</p>
+
+        <div class="form-group">
+            <label class="form-label">Employee Name</label>
+            <input
+                id="employeeName"
+                class="form-input"
+                type="text"
+                placeholder="Enter your name">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Department</label>
+
+            <select
+                id="departmentSelect"
+                class="form-select">
+
+                <option>Front Office</option>
+                <option>Housekeeping</option>
+                <option>Maintenance</option>
+                <option>Restaurant</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label class="form-label">Current Shift</label>
+
+            <div id="currentShiftLabel">
+
+                Detecting...
+
+            </div>
+
+        </div>
+
+        <button
+            id="startShiftBtn"
+            class="btn btn-primary">
+
+            ▶ Start Shift
+
+        </button>
+
+    </div>
+
+</section>
+
+
+    <!-- ===================================================== -->
+    <!-- HEADER -->
+    <!-- ===================================================== -->
+
+    <header id="topBar" class="top-bar">
+
+        <div>
+
+            <p class="shift-label">
+
+                Night Shift
+
+            </p>
+
+            <h1>
+
+                ShiftFlow AI
+
+            </h1>
+
+        </div>
+
+        <button
+            id="profileButton"
+            class="icon-button"
+            aria-label="Profile">
+
+            ☰
+
+        </button>
+
+    </header>
+
+
+    <!-- ===================================================== -->
+    <!-- MAIN -->
+    <!-- ===================================================== -->
+
+    <main id="mainContent">
+
+        <!-- ================= Dashboard ================= -->
+
+        <section
+            id="dashboardPage"
+            class="page active">
+
+            <div class="welcome-card">
+
+                <span id="greetingText">
+
+                    Good Evening
+
+                </span>
+
+                <h2>
+
+                    Welcome Back
+
+                </h2>
+
+                <p>
+
+                    Here's what's happening at the property.
+
+                </p>
+
+            </div>
+
+
+            <!-- Quick Stats -->
+
+            <section class="stats-grid">
+
+                <article
+                    class="stat-card attention">
+
+                    <h3>
+
+                        Needs Attention
+
+                    </h3>
+
+                    <span id="attentionCount">
+
+                        0
+
+                    </span>
+
+                </article>
+
+                <article
+                    class="stat-card">
+
+                    <h3>
+
+                        Active Tasks
+
+                    </h3>
+
+                    <span id="taskCount">
+
+                        0
+
+                    </span>
+
+                </article>
+
+                <article
+                    class="stat-card">
+
+                    <h3>
+
+                        Completed Today
+
+                    </h3>
+
+                    <span id="completedToday">
+
+                        0
+
+                    </span>
+
+                </article>
+
+                <article
+                    class="stat-card">
+
+                    <h3>
+
+                        Upcoming
+
+                    </h3>
+
+                    <span id="upcomingCount">
+
+                        0
+
+                    </span>
+
+                </article>
+
+            </section>
+
+
+           <!-- Generate Handover -->
+
+<section class="dashboard-section">
+
+    <div style="display:flex; gap:12px;">
+
+        <button
+            id="generateReportBtn"
+            class="btn btn-primary"
+            style="flex:1;">
+
+            📑 Generate Handover
+
+        </button>
+
+        <button
+            id="endShiftBtn"
+            class="btn btn-secondary"
+            style="flex:1;">
+
+            🏁 End Shift
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+            <!-- Needs Attention -->
+
+            <section class="dashboard-section">
+
+                <div class="section-header">
+
+                    <h2>
+
+                        Needs Attention
+
+                    </h2>
+
+                    <button
+                        id="viewAllAttention">
+
+                        View All
+
+                    </button>
+
+                </div>
+
+                <div
+                    id="dashboardTasks"
+                    class="card-list">
+
+                </div>
+
+            </section>
+
+
+            <!-- Recent Activity -->
+
+            <section class="dashboard-section">
+
+                <div class="section-header" id="activityToggle">
+
+                    <h2>
+
+                        Recent Activity
+
+                    </h2>
+                    
+                    <span id="activityArrow">▼</span>
+
+                </div>
+
+                <div
+                    id="timelinePreview"
+                    class="timeline">
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- ================= Task Page ================= -->
+<section
+    id="tasksPage"
+    class="page">
+
+    <header class="page-header">
+
+        <h2>
+
+            Active Tasks
+
+        </h2>
+
+    </header>
+
+    <div class="search-bar">
+
+        <input
+            id="taskSearch"
+            type="search"
+            placeholder="Search tasks...">
+
+    </div>
+
+    <div
+        id="tasksContainer"
+        class="card-list">
+
+    </div>
+
+</section>
+
+
+        <!-- ================= Timeline ================= -->
+
+        <section
+            id="timelinePage"
+            class="page">
+
+            <header class="page-header">
+
+                <h2>
+
+                    Timeline
+
+                </h2>
+
+            </header>
+
+            <div
+                id="timelineContainer"
+                class="timeline">
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= Settings ================= -->
+
+        <section
+            id="settingsPage"
+            class="page">
+
+            <header class="page-header">
+
+                <h2>
+
+                    Settings
+
+                </h2>
+
+            </header>
+
+            <div
+                id="settingsContainer">
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ===================================================== -->
+    <!-- FLOATING ACTION BUTTON -->
+    <!-- ===================================================== -->
+
+    <button
+        id="fab"
+        aria-label="Quick Actions">
+
+        +
+
+    </button>
+
+
+
+    <!-- ===================================================== -->
+    <!-- Quick Actions -->
+    <!-- ===================================================== -->
+
+    <div
+        id="fabMenu"
+        class="hidden">
+
+        <button data-type="note">
+           📝 New Note
+        </button>
+
+        <button data-type="handover">
+           🤝 Handover
+        </button>
+
+    </div>
+
+
+
+<!-- ===================================================== -->
+<!-------------------- BOTTOM NAVIGATION -------------------->
+<!-- ===================================================== -->
+
+<nav id="bottomNav" class="bottom-nav">
+
+    <button
+        class="nav-item active"
+        data-page="dashboardPage">
+
+        <span>🏠</span>
+
+        Dashboard
+
+    </button>
+
+    <button
+        class="nav-item"
+        data-page="tasksPage">
+
+        <span>📋</span>
+
+        Tasks
+
+    </button>
+
+    <button
+        class="nav-item"
+        data-page="timelinePage">
+
+        <span>🕒</span>
+
+        Timeline
+
+    </button>
+
+    <button
+        class="nav-item"
+        data-page="settingsPage">
+
+        <span>⚙️</span>
+
+        Settings
+
+    </button>
+
+</nav>
+
+
+    <!-- ===================================================== -->
+    <!-- TOAST -->
+    <!-- ===================================================== -->
+
+    <div
+        id="toastContainer">
+
+    </div>
+
+
+
+    <!-- ===================================================== -->
+    <!-- LOADING -->
+    <!-- ===================================================== -->
+
+    <div
+        id="loadingOverlay"
+        class="hidden">
+
+        <div class="loader"></div>
+
+        <p>
+
+            Loading...
+
+        </p>
+
+    </div>
+
+</div>
+
+
+<script type="module" src="js/app.js"></script>
+
+</body>
+
+</html>
